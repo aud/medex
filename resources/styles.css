@@ -16,7 +16,7 @@
   y: 120;
   x: 250;
   font-size: 25;
-  font-family: Tungsten-Medium;
+  font-family: System-Regular;
   fill: white;
   text-length: 64;
 }
@@ -32,67 +32,71 @@
   x: 60;
   y: 240;
   font-size: 40;
-  font-family: Tungsten-Medium;
+  font-family: System-Regular;
   fill: white;
   text-length: 64;
 }
 
 #Date {
   x: 60;
-  y: 175;
+  /* changed + 10 */
+  y: 185;
   font-size: 40;
-  font-family: Tungsten-Medium;
+  font-family: System-Regular;
   fill: white;
   text-length: 64;
-}
-
-#Steps {
-  x: 250;
-  y: 175;
-  font-size: 40;
-  font-family: Tungsten-Medium;
-  fill: white;
-  text-length: 64;
-}
-
-#HeartRate {
-  x: 250;
-  y: 240;
-  font-size: 40;
-  font-family: Tungsten-Medium;
-  fill: white;
-  text-length: 64;
-}
-
-#Clock {
-  x: 50%;
-  y: 320;
-  font-size: 80;
-  font-family: Tungsten-Medium;
-  fill: white;
-  text-length: 64;
-  text-anchor: middle;
-}
-
-#HeartRateIcon {
-  height: 32;
-  width: 32;
-  x: 210;
-  y: 210;
-}
-
-#StepsIcon {
-  height: 32;
-  width: 32;
-  x: 210;
-  y: 145;
 }
 
 #DateIcon {
   height: 32;
   width: 32;
   x: 15;
-  y: 145;
+  /* y: 145; y+10 */
+  y: 155;
+}
+
+#Steps {
+  x: 240;
+  y: 185;
+  font-size: 40;
+  font-family: System-Regular;
+  fill: white;
+  text-length: 64;
+}
+
+#StepsIcon {
+  height: 32;
+  width: 32;
+  x: 200;
+  y: 155;
+}
+
+
+#HeartRate {
+  x: 240;
+  y: 240;
+  font-size: 40;
+  font-family: System-Regular;
+  fill: white;
+  text-length: 64;
+}
+
+#HeartRateIcon {
+  height: 32;
+  width: 32;
+  x: 200;
+  y: 210;
+}
+
+
+#Clock {
+  x: 50%;
+  y: 320;
+  font-size: 80;
+  font-family: System-Regular;
+  fill: white;
+  text-length: 64;
+  text-anchor: middle;
 }
 
 #WeatherIcon {

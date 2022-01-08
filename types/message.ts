@@ -3,7 +3,7 @@ export interface Glucose {
   mgdl: number;
   trend: string;
   timestamp: number;
-  roundedUnitAwareValue: string;
+  unit: string;
   stale: boolean;
 }
 

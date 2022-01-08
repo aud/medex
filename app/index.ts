@@ -8,7 +8,12 @@ import type {Glucose, Weather, Message} from "../types/message";
 
 function drawGlucose(glucose: Glucose) {
   const glucoseElm = document.getElementById("Glucose") as TextElement;
-  glucoseElm.text = glucose.roundedUnitAwareValue;
+
+  // For mmol, round to tenth decimal
+  // For mgdl, leave as is as its a whole number
+  glucoseElm.text = glucose.unit === "mmol"
+    ? glucose[glucose.unit].toFixed(1)
+    : glucose[glucose.unit];
 
   // Show line through glucose level to indicate stale
   const glucoseLineCrossElm = document.getElementById("GlucoseLine") as LineElement;
