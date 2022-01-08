@@ -1,3 +1,28 @@
-<svg class="background">
-  <text id="myLabel" />
+<svg viewport-fill="black">
+  <svg id="GlucoseSection">
+    <svg id="GlucoseLine">
+      <line x1="25%" y1="75" x2="75%" y2="75" fill="white" stroke-width="5" />
+    </svg>
+    <text id="Glucose">-</text>
+    <text id="GlucoseLastUpdated"></text>
+    <image id="GlucoseArrowIcon" href="" />
+  </svg>
+
+  <svg id="MainSection">
+    <image id="DateIcon" href="images/date.png" />
+    <text id="Date">-</text>
+
+    <image id="WeatherIcon" href="images/weather.png" />
+    <text id="Weather">-</text>
+
+    <image id="StepsIcon" href="images/shoe.png" />
+    <text id="Steps">-</text>
+
+    <image id="HeartRateIcon" href="images/heart.png" />
+    <text id="HeartRate">-</text>
+  </svg>
+
+  <svg id="BottomSection">
+    <text id="Clock">-</text>
+  </svg>
 </svg>
