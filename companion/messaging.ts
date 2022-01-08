@@ -12,7 +12,7 @@ export function sendGlucose() {
   asap.send({
     type: "glucose",
     message: {
-      unit: getDexcomUnit(),
+      roundedUnitAwareValue: Math.round(glucoseValues[getDexcomUnit()] * 10 / 10).toString(),
       stale: classifiedStale(glucoseValues.timestamp),
       ...glucoseValues,
     }

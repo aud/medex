@@ -8,7 +8,7 @@ import type {Glucose, Weather, Message} from "../types/message";
 
 function drawGlucose(glucose: Glucose) {
   const glucoseElm = document.getElementById("Glucose") as TextElement;
-  glucoseElm.text = (Math.round(glucose[glucose.unit] * 10) / 10).toString();
+  glucoseElm.text = glucose.roundedUnitAwareValue;
 
   // Show line through glucose level to indicate stale
   const glucoseLineCrossElm = document.getElementById("GlucoseLine") as LineElement;
