@@ -4,6 +4,8 @@
       <line x1="25%" y1="75" x2="75%" y2="75" fill="white" stroke-width="5" />
     </svg>
 
+    <text id="GlucoseNotLoaded">-</text>
+
     <use href="#fitfont" id="Glucose" x="50%" y="50%-100" fill="#FFE6D2">
       <use href="#fitfont-char"/>
       <use href="#fitfont-char"/>

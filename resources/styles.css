@@ -1,3 +1,9 @@
+#GlucoseNotLoaded {
+  x: 50%;
+  y: 50%-100;
+  fill: #FFE6D2;
+}
+
 #GlucoseLine {
   display: none;
 }

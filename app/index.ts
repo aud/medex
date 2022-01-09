@@ -1,4 +1,5 @@
 import document from "document";
+import {me} from "appbit";
 import asap from "fitbit-asap/app";
 import {humanReadableLastUpdatedTimeSec, humanReadableDate, assetPathForTrend} from "../common/utils";
 import {hrm} from "./hrm";
@@ -13,6 +14,9 @@ function drawGlucose(glucose: Glucose) {
   const value = glucose.unit === "mmol"
     ? glucose[glucose.unit].toFixed(1)
     : glucose[glucose.unit];
+
+  const glucoseNotLoadedElm = document.getElementById("GlucoseNotLoaded") as TextElement;
+  glucoseNotLoadedElm.style.display = "none";
 
   const glucoseElm = new FitFont({
     id: "Glucose",
@@ -64,6 +68,10 @@ function drawClock() {
   clock((time: string) => clockElm.text = time);
 }
 
+function triggerRefresh() {
+  me.exit();
+}
+
 function processMessage(event: Message) {
   switch (event.type) {
     case "glucose":
@@ -73,6 +81,10 @@ function processMessage(event: Message) {
     case "weather":
       console.log("Processing weather message")
       drawWeather(event.message);
+      break;
+    case "refresh":
+      console.log("Processing refresh message")
+      triggerRefresh();
       break;
     default:
       throw new Error("Unhandled event type");

@@ -22,4 +22,8 @@ interface WeatherMessage {
   message: Weather;
 }
 
-export type Message = GlucoseMessage | WeatherMessage;
+interface RefreshMessage {
+  type: "refresh";
+}
+
+export type Message = GlucoseMessage | WeatherMessage | RefreshMessage;

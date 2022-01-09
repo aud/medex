@@ -8,6 +8,7 @@ import {classifiedStale} from "./glucose";
 
 export function sendGlucose() {
   const glucoseValues = getDexcomEstimatedGlucoseValues();
+  if (Object.keys(glucoseValues).length === 0) return;
 
   asap.send({
     type: "glucose",
@@ -20,10 +21,12 @@ export function sendGlucose() {
 }
 
 export function sendWeather() {
-  asap.send({
-    type: "weather",
-    message: {
-      ...getWeatherValues(),
-    }
-  });
+  const weather = getWeatherValues();
+  if (Object.keys(weather).length === 0) return;
+
+  asap.send({type: "weather", message: weather});
+}
+
+export function sendRefresh() {
+  asap.send({type: "refresh"});
 }

@@ -10,11 +10,15 @@ export function getDexcomPassword() {
 }
 
 export function getDexcomServer(): "us" | "eu" {
-  return deserializedContents(STORAGE_KEYS.DEXCOM_SERVER).values[0].name;
+  const data = deserializedContents(STORAGE_KEYS.DEXCOM_SERVER).values;
+
+  return data && data[0].name;
 }
 
 export function getDexcomUnit() {
-  return deserializedContents(STORAGE_KEYS.DEXCOM_UNIT).values[0].name;
+  const data = deserializedContents(STORAGE_KEYS.DEXCOM_UNIT).values;
+
+  return data && data[0].name;
 }
 
 export function getDexcomEstimatedGlucoseValues() {

@@ -9,7 +9,7 @@ import {
 } from "./local-storage";
 import {writeGlucose} from "./glucose";
 import {writeWeather} from "./weather";
-import {sendGlucose, sendWeather} from "./messaging";
+import {sendGlucose, sendWeather, sendRefresh} from "./messaging";
 
 function refreshClient() {
   try {
@@ -21,7 +21,7 @@ function refreshClient() {
 
     // If config is immediately incorrect
   } catch(err) {
-    console.error((err as Error).toString());
+    console.error(`DexcomClient: ${(err as Error)}`);
 
     return undefined;
   }
@@ -37,6 +37,8 @@ settingsStorage.onchange = (event: StorageChangeEvent) => {
       client = refreshClient();
       break;
   }
+
+  sendRefresh();
 }
 
 (async () => {

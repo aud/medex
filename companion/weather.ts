@@ -8,10 +8,14 @@ import {kelvinToFahrenheit, kelvinToCelcius} from "../common/utils";
 
 export async function writeWeather() {
   try {
+    const apiKey = getOpenWeatherMapApiKey();
+
+    if (!apiKey) throw new Error("API key not configured");
+
     const {latitude, longitude} = await coordinates();
 
     const result = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${getOpenWeatherMapApiKey()}`,
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`,
     );
 
     const json = await result.json();
@@ -36,6 +40,6 @@ export async function writeWeather() {
 
     return true;
   } catch (err) {
-    console.error((err as Error).toString());
+    console.error(`Weather: ${(err as Error)}`);
   }
 }
