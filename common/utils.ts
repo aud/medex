@@ -18,14 +18,6 @@ export function assetPathForTrend(trend: string) {
   return "images/" + trend + ".png";
 }
 
-export function kelvinToCelcius(kelvin: number) {
-  return kelvin - 273.15;
-}
-
-export function kelvinToFahrenheit(kelvin: number) {
-  return ((kelvin - 273.15) * 1.8) + 32;
-}
-
 // Returns the current date in the format of (eg. Wed. 8)
 export function humanReadableDate() {
   const DAYS = [

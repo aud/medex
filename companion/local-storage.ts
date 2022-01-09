@@ -29,10 +29,6 @@ export function setDexcomEstimatedGlucoseValues(data: string) {
   return settingsStorage.setItem(STORAGE_KEYS.DEXCOM_ESTIMATED_GLUCOSE_VALUES, data);
 }
 
-export function getOpenWeatherMapApiKey() {
-  return deserializedContents(STORAGE_KEYS.WEATHER_API_KEY).name;
-}
-
 export function getWeatherUnit() {
   return deserializedContents(STORAGE_KEYS.WEATHER_UNIT).values[0].name;
 }

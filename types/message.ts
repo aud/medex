@@ -9,7 +9,7 @@ export interface Glucose {
 
 export interface Weather {
   value: string;
-  unit: "C" | "F";
+  unit: "celcius" | "fahrenheit";
 }
 
 interface GlucoseMessage {

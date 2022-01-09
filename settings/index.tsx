@@ -47,30 +47,15 @@ const WeatherSection = () => {
     </Text>
   );
 
-  const descriptionMarkup = (
-    <Text>
-      Note: the API key is required as its used to pull the weather from
-      https://openweathermap.org/. Signup is free and takes less than 5
-      minutes. Create an account and enter in your API key in the field below.
-
-      https://home.openweathermap.org/users/sign_in
-    </Text>
-  );
-
   return (
-    <Section title={titleMarkup} description={descriptionMarkup}>
+    <Section title={titleMarkup}>
       <Select
         label="Unit (celcius or fahrenheit)"
         settingsKey={STORAGE_KEYS.WEATHER_UNIT}
         options={[
-          {name: "c"},
-          {name: "f"},
+          {name: "celsius"},
+          {name: "fahrenheit"},
         ]}
-      />
-
-      <TextInput
-        label="Open Weather Map API Key (required)"
-        settingsKey={STORAGE_KEYS.WEATHER_API_KEY}
       />
     </Section>
   );
