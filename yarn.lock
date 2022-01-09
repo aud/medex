@@ -502,6 +502,11 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
+"@types/fitfont@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@types/fitfont/-/fitfont-1.3.1.tgz#61b304612ee9acb9284afdd46609ca383af960da"
+  integrity sha512-sOODOJCiF3G8KyooydTCSb5odg80mjM2l0EL4htLP80ZNrViYNZLOFOYN0edU2i3uBxtdjlJpUbHKTRbu9/F2Q==
+
 "@types/jquery@^3.5.5":
   version "3.5.11"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.11.tgz#fb2a255e8376779e89a10ddd04bfc1a93398f861"
@@ -1304,6 +1309,14 @@ fitbit-sdk-types@^7.0.4:
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/fitbit-sdk-types/-/fitbit-sdk-types-7.0.4.tgz#ca412440f817aab773ca235370426f0a05c7b1c7"
   integrity sha512-woD+AN9z+T1yP43kZ/T/fI+fw6CnfxeD9t95l6098Fy8m4kSZZkxCtQ/m/gvbq8TheToztgdlt5F3mVO/22OaA==
+
+fitfont@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/fitfont/-/fitfont-1.3.3.tgz#47bf3ea7137aff97679143b8c8405e4bb9a218d0"
+  integrity sha512-tHVoT9OxLpkcnQgISOxjTkZfKA2rJ0Ahslggmnq2sxiaeXge+WDH02VlRq5QK54qkwqhYTemmmF/LJdJFVoXIg==
+  dependencies:
+    python-shell "^1.0.4"
+    readline2 "^1.0.1"
 
 flush-write-stream@^1.0.2:
   version "1.1.1"
@@ -2158,6 +2171,11 @@ multistream@^4.1.0:
     once "^1.4.0"
     readable-stream "^3.6.0"
 
+mute-stream@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
+  integrity sha1-j7+rsKmKJT0xhDMfno3rc3L6xsA=
+
 mute-stream@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
@@ -2464,6 +2482,11 @@ pupa@^2.0.1, pupa@^2.1.1:
   dependencies:
     escape-goat "^2.0.0"
 
+python-shell@^1.0.4:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/python-shell/-/python-shell-1.0.8.tgz#067bc93d790913efaa4b2a3c9d0e85e02adab510"
+  integrity sha512-jMKagerg3alm6j+Prq5t/M3dTgEppy5vC6ns+LqAjfuHiT8olfK3PMokpqpeEcWEqvDnUcAOhp6SQzaLBtTzRw==
+
 rc@^1.2.7, rc@^1.2.8:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
@@ -2505,6 +2528,15 @@ readable-stream@~1.0.17:
     inherits "~2.0.1"
     isarray "0.0.1"
     string_decoder "~0.10.x"
+
+readline2@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/readline2/-/readline2-1.0.1.tgz#41059608ffc154757b715d9989d199ffbf372e35"
+  integrity sha1-QQWWCP/BVHV7cV2ZidGZ/783LjU=
+  dependencies:
+    code-point-at "^1.0.0"
+    is-fullwidth-code-point "^1.0.0"
+    mute-stream "0.0.5"
 
 regenerator-runtime@^0.10.5:
   version "0.10.5"

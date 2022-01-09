@@ -5,15 +5,22 @@ import {hrm} from "./hrm";
 import {steps} from "./steps";
 import {clock} from "./clock";
 import type {Glucose, Weather, Message} from "../types/message";
+import {FitFont} from "fitfont";
 
 function drawGlucose(glucose: Glucose) {
-  const glucoseElm = document.getElementById("Glucose") as TextElement;
-
-  // For mmol, round to tenth decimal
-  // For mgdl, leave as is as its a whole number
-  glucoseElm.text = glucose.unit === "mmol"
+  // For mmol, round to tenth decimal.
+  // For mgdl, leave as is as it's a whole number.
+  const value = glucose.unit === "mmol"
     ? glucose[glucose.unit].toFixed(1)
     : glucose[glucose.unit];
+
+  const glucoseElm = new FitFont({
+    id: "Glucose",
+    font: "Bungee_Shade_110",
+    halign: "middle",
+    valign: "middle",
+  });
+  glucoseElm.text = value;
 
   // Show line through glucose level to indicate stale
   const glucoseLineCrossElm = document.getElementById("GlucoseLine") as LineElement;
@@ -39,7 +46,7 @@ function drawWeather(weather: Weather) {
   const weatherElm = document.getElementById("Weather") as TextElement;
   const DEGREE_HTML_CODE = "&#176;"
 
-  weatherElm.text = `${weather.value}${DEGREE_HTML_CODE} ${weather.unit}`;
+  weatherElm.text = weather.value + DEGREE_HTML_CODE + weather.unit;
 }
 
 function drawSteps() {
