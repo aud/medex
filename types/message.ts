@@ -4,7 +4,6 @@ export interface Glucose {
   trend: string;
   timestamp: number;
   unit: string;
-  stale: boolean;
 }
 
 export interface Weather {

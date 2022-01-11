@@ -4,9 +4,17 @@ import {
   getDexcomUnit,
   getWeatherValues,
 } from "./local-storage";
-import {classifiedStale} from "./glucose";
 
-export function sendGlucose() {
+export function sendData() {
+  sendWeather();
+  sendGlucose();
+}
+
+export function sendRefresh() {
+  asap.send({type: "refresh"});
+}
+
+function sendGlucose() {
   const glucoseValues = getDexcomEstimatedGlucoseValues();
   if (Object.keys(glucoseValues).length === 0) return;
 
@@ -14,19 +22,14 @@ export function sendGlucose() {
     type: "glucose",
     message: {
       unit: getDexcomUnit(),
-      stale: classifiedStale(glucoseValues.timestamp),
       ...glucoseValues,
     }
   });
 }
 
-export function sendWeather() {
+function sendWeather() {
   const weather = getWeatherValues();
   if (Object.keys(weather).length === 0) return;
 
   asap.send({type: "weather", message: weather});
-}
-
-export function sendRefresh() {
-  asap.send({type: "refresh"});
 }

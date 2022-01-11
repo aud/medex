@@ -1,3 +1,5 @@
+import {Glucose} from "../types/message";
+
 export function humanReadableLastUpdatedTimeSec(timestamp: number) {
   const seconds = Math.round(
     (new Date().getTime() - new Date(timestamp).getTime()) / 1000,
@@ -36,4 +38,14 @@ export function humanReadableDate() {
   const dayOfMonth = today.getDate();
 
   return DAYS[dayOfWeek] + ". " + dayOfMonth;
+}
+
+export function classifiedStale(timestamp: Glucose["timestamp"]) {
+  const now = new Date().getTime();
+
+  // Usually a refresh will happen every 5m. Past 10m and the data will be
+  // considered stale.
+  const staleThreshold = 10 * 60;
+
+  return now >= (timestamp + staleThreshold * 1000);
 }

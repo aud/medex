@@ -1,12 +1,19 @@
 import document from "document";
 import {me} from "appbit";
 import asap from "fitbit-asap/app";
-import {humanReadableLastUpdatedTimeSec, humanReadableDate, assetPathForTrend} from "../common/utils";
+import {
+  humanReadableLastUpdatedTimeSec,
+  humanReadableDate,
+  assetPathForTrend,
+  classifiedStale,
+} from "../common/utils";
 import {hrm} from "./hrm";
 import {steps} from "./steps";
 import {clock} from "./clock";
 import type {Glucose, Weather, Message} from "../types/message";
 import {FitFont} from "fitfont";
+
+let tickerInterval: ReturnType<typeof setInterval>;
 
 function drawGlucose(glucose: Glucose) {
   // For mmol, round to tenth decimal.
@@ -26,19 +33,38 @@ function drawGlucose(glucose: Glucose) {
   });
   glucoseElm.text = value;
 
-  // Show line through glucose level to indicate stale
-  const glucoseLineCrossElm = document.getElementById("GlucoseLine") as LineElement;
-  if (glucose.stale) {
-    glucoseLineCrossElm.style.display = "inline";
-  } else {
-    glucoseLineCrossElm.style.display = "none";
-  }
+  const glucoseArrowIcon = document.getElementById("GlucoseArrowIcon") as ImageElement;
+  glucoseArrowIcon.href = assetPathForTrend(glucose.trend);
 
   const glucoseLastUpdatedElm = document.getElementById("GlucoseLastUpdated") as TextElement;
   glucoseLastUpdatedElm.text = humanReadableLastUpdatedTimeSec(glucose.timestamp);
 
-  const glucoseArrowIcon = document.getElementById("GlucoseArrowIcon") as ImageElement;
-  glucoseArrowIcon.href = assetPathForTrend(glucose.trend);
+  // Handle artifical ticker. We can't get data reliably from the companion, so
+  // instead we artifically create a ticker and reset it when new messages are
+  // processed.
+  let lastUpdatedTicker = glucose.timestamp;
+
+  const tickUpdateCallback = () => {
+    const stale = classifiedStale(lastUpdatedTicker);
+
+    // Show line through glucose level to indicate stale
+    const glucoseLineCrossElm = document.getElementById("GlucoseLine") as LineElement;
+    if (stale) {
+      glucoseLineCrossElm.style.display = "inline";
+    } else {
+      glucoseLineCrossElm.style.display = "none";
+    }
+
+    lastUpdatedTicker += 1;
+    glucoseLastUpdatedElm.text = humanReadableLastUpdatedTimeSec(lastUpdatedTicker);
+  };
+
+  // Teardown ticker
+  if (tickerInterval) {
+    clearInterval(tickerInterval);
+  }
+
+  tickerInterval = setInterval(tickUpdateCallback, 1_000);
 }
 
 function drawDate() {
@@ -98,4 +124,4 @@ function processMessage(event: Message) {
   drawClock();
 
   asap.onmessage = processMessage;
-})()
+})();

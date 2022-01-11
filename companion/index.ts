@@ -9,7 +9,25 @@ import {
 } from "./local-storage";
 import {writeGlucose} from "./glucose";
 import {writeWeather} from "./weather";
-import {sendGlucose, sendWeather, sendRefresh} from "./messaging";
+import {sendData, sendRefresh} from "./messaging";
+import {me} from "companion";
+
+// 5m is the lowest possible time for wakeup.
+// https://dev.fitbit.com/build/guides/companion/#periodic-wake-interval
+//
+// Note: The companion lifecycle is _very_ unpredictable. It may be inactive
+// for a number of reasons (eg. phone battery), fitbit sdk bugs..
+me.wakeInterval = 5 * 60 * 1000;
+
+// @ts-ignore
+me.onwakeinterval = async () => {
+  console.log("Hit wake interval")
+
+  await writeWeather();
+  await writeGlucose(client);
+
+  sendData();
+}
 
 function refreshClient() {
   try {
@@ -39,6 +57,7 @@ settingsStorage.onchange = (event: StorageChangeEvent) => {
   }
 
   sendRefresh();
+  sendData();
 }
 
 (async () => {
@@ -50,18 +69,13 @@ settingsStorage.onchange = (event: StorageChangeEvent) => {
   await writeGlucose(client);
 
   // Paint UI on initilization
-  sendWeather();
-  sendGlucose();
+  sendData();
 
-  // Refresh weather store every 15s
-  setInterval(async () => await writeWeather(), 15_000);
+  // Refresh weather store every 5m
+  setInterval(async () => await writeWeather(), 5 * 60 * 1000);
+  // Refresh glucose store every 30s
+  setInterval(async () => await writeGlucose(client), 30 * 1000);
 
-  // Refresh glucose store every 15s
-  setInterval(async () => await writeGlucose(client), 15_000);
-
-  // Repaint glucose data every 1s
-  setInterval(sendGlucose, 1_000);
-
-  // Repaint weather data every 30s
-  setInterval(sendWeather, 30_000);
+  // Repaint UI with latest data every 30s
+  setInterval(sendData, 30 * 1000);
 })();
