@@ -27,7 +27,7 @@ function drawGlucose(glucose: Glucose) {
 
   const glucoseElm = new FitFont({
     id: "Glucose",
-    font: "Bungee_Shade_110",
+    font: "Bungee_Shade_90",
     halign: "middle",
     valign: "middle",
   });
