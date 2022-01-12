@@ -7,10 +7,12 @@ import {
   getDexcomPassword,
   getDexcomServer,
 } from "./local-storage";
+import {writeAlertDismissed} from "./alert";
 import {writeGlucose} from "./glucose";
 import {writeWeather} from "./weather";
 import {sendData, sendRefresh} from "./messaging";
 import {me} from "companion";
+import type {Message} from "../types/message";
 
 // 5m is the lowest possible time for wakeup.
 // https://dev.fitbit.com/build/guides/companion/#periodic-wake-interval
@@ -60,6 +62,17 @@ settingsStorage.onchange = (event: StorageChangeEvent) => {
   sendData();
 }
 
+function processMessage(event: Message) {
+  switch (event.type) {
+    case "alert-dismissed":
+      console.log("Processing " + event.type);
+      writeAlertDismissed();
+      break;
+    default:
+      throw new Error("Unhandled event type");
+  }
+}
+
 (async () => {
   // Cancel if previous messages
   asap.cancel();
@@ -78,4 +91,6 @@ settingsStorage.onchange = (event: StorageChangeEvent) => {
 
   // Repaint UI with latest data every 30s
   setInterval(sendData, 0.5 * 60 * 1000);
+
+  asap.onmessage = processMessage;
 })();

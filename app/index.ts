@@ -97,6 +97,7 @@ function drawClock() {
 function drawAlert(glucose: Glucose) {
   if (glucose.alert.enabled === false) return;
   if (glucose.alert.active === false) return;
+  if (glucose.alert.prevDismissed === true) return;
 
   // Draw interface first
   //
@@ -124,6 +125,8 @@ function drawAlert(glucose: Glucose) {
   muteButtonElm.onclick = () => {
     hideAlertDisplay();
     showMainDisplay();
+
+    asap.send({type: "alert-dismissed", bg: glucose[glucose.unit]});
   }
 }
 

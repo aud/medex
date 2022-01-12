@@ -8,6 +8,7 @@ export interface Glucose {
     type: "high" | "low" | undefined;
     active: boolean;
     enabled: boolean;
+    prevDismissed: boolean;
   }
 }
 
@@ -30,4 +31,9 @@ interface RefreshMessage {
   type: "refresh";
 }
 
-export type Message = GlucoseMessage | WeatherMessage | RefreshMessage;
+interface AlertDismissedMessage {
+  type: "alert-dismissed";
+  bg: number;
+}
+
+export type Message = GlucoseMessage | WeatherMessage | RefreshMessage | AlertDismissedMessage;

@@ -33,6 +33,15 @@ export function getDexcomEstimatedGlucoseValues() {
   return deserializedContents(STORAGE_KEYS.DEXCOM_ESTIMATED_GLUCOSE_VALUES);
 }
 
+export function setAlertDismissed(data: string) {
+  return settingsStorage.setItem(STORAGE_KEYS.DEXCOM_ALERT_DISMISSED, data);
+}
+
+export function getAlertDismissed() {
+  const data = deserializedContents(STORAGE_KEYS.DEXCOM_ALERT_DISMISSED);
+  return data === 1;
+}
+
 export function setDexcomEstimatedGlucoseValues(data: string) {
   return settingsStorage.setItem(STORAGE_KEYS.DEXCOM_ESTIMATED_GLUCOSE_VALUES, data);
 }

@@ -1,3 +1,5 @@
+import {setAlertDismissed} from "./local-storage";
+
 interface Props {
   lowAlertThreshold: number;
   highAlertThreshold: number;
@@ -33,4 +35,8 @@ export class Alert {
   private get low() {
     return this.currentBg <= this.lowAlertThreshold;
   }
+}
+
+export function writeAlertDismissed() {
+  setAlertDismissed("1");
 }

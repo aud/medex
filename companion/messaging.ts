@@ -5,6 +5,8 @@ import {
   getWeatherValues,
   getHighAlertThreshold,
   getLowAlertThreshold,
+  getAlertDismissed,
+  setAlertDismissed,
 } from "./local-storage";
 import {Alert} from "./alert";
 
@@ -45,6 +47,12 @@ function sendGlucose() {
     alertType = alert.type;
   }
 
+  const alertDismissed = getAlertDismissed();
+
+  if (alertDismissed === true && alertActive === false) {
+    setAlertDismissed("0");
+  }
+
   asap.send({
     type: "glucose",
     message: {
@@ -53,6 +61,7 @@ function sendGlucose() {
         enabled: alertEnabled,
         active: alertActive,
         type: alertType,
+        prevDismissed: alertDismissed,
       },
       ...glucoseValues,
     }
