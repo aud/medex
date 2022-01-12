@@ -4,6 +4,11 @@ export interface Glucose {
   trend: string;
   timestamp: number;
   unit: string;
+  alert: {
+    type: "high" | "low" | undefined;
+    active: boolean;
+    enabled: boolean;
+  }
 }
 
 export interface Weather {

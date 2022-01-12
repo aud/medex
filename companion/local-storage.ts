@@ -21,6 +21,14 @@ export function getDexcomUnit() {
   return data && data[0].name;
 }
 
+export function getHighAlertThreshold() {
+  return deserializedContents(STORAGE_KEYS.DEXCOM_HIGH_THRESHOLD).name;
+}
+
+export function getLowAlertThreshold() {
+  return deserializedContents(STORAGE_KEYS.DEXCOM_LOW_THRESHOLD).name;
+}
+
 export function getDexcomEstimatedGlucoseValues() {
   return deserializedContents(STORAGE_KEYS.DEXCOM_ESTIMATED_GLUCOSE_VALUES);
 }

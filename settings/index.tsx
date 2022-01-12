@@ -15,7 +15,7 @@ const DexcomSecretsSection = () => {
   );
 
   return (
-    <Section description={descriptionMarkup}>
+    <Section description={descriptionMarkup} title={<Text bold align="center">Configure Dexcom Settings</Text>}>
       <TextInput title="Dexcom Share username" settingsKey={STORAGE_KEYS.DEXCOM_USERNAME} />
       <TextInput title="Dexcom Share password" settingsKey={STORAGE_KEYS.DEXCOM_PASSWORD} />
 
@@ -40,15 +40,28 @@ const DexcomSecretsSection = () => {
   );
 };
 
-const WeatherSection = () => {
-  const titleMarkup = (
-    <Text bold>
-      Configure weather settings
+const DexcomAlertSection = () => {
+  const descriptionMarkup = (
+    <Text>
+      Configure a low and high threshold for alerting. This will enable
+      vibration alerts on the smart watch when you get a low or high. Both of
+      these must be configured correctly in order for alerting to properly
+      function. Note: these values should be in the same unit as the format
+      selected above.
     </Text>
   );
 
   return (
-    <Section title={titleMarkup}>
+    <Section description={descriptionMarkup} title={<Text bold align="center">Configure Alerting Thresholds</Text>}>
+      <TextInput title="High threshold" settingsKey={STORAGE_KEYS.DEXCOM_HIGH_THRESHOLD} />
+      <TextInput title="Low threshold" settingsKey={STORAGE_KEYS.DEXCOM_LOW_THRESHOLD} />
+    </Section>
+  );
+}
+
+const WeatherSection = () => {
+  return (
+    <Section title={<Text bold align="center">Configure Weather Settings</Text>}>
       <Select
         label="Unit (celcius or fahrenheit)"
         settingsKey={STORAGE_KEYS.WEATHER_UNIT}
@@ -64,6 +77,7 @@ const WeatherSection = () => {
 registerSettingsPage(() => (
   <Page>
     <DexcomSecretsSection />
+    <DexcomAlertSection />
     <WeatherSection />
   </Page>
 ));

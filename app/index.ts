@@ -94,6 +94,39 @@ function drawClock() {
   clock((time: string) => clockElm.text = time);
 }
 
+function drawAlert(glucose: Glucose) {
+  if (glucose.alert.enabled === false) return;
+  if (glucose.alert.active === false) return;
+
+  // Draw interface first
+  //
+  // Hide/show main display
+  const mainElm = document.getElementById("Main") as ImageElement;
+  const showMainDisplay = () => mainElm.style.display = "inline";
+  const hideMainDisplay = () => mainElm.style.display = "none";
+
+  // Hide/show alert display
+  const alertElm = document.getElementById("Alert") as ImageElement;
+  const showAlertDisplay = () => alertElm.style.display = "inline";
+  const hideAlertDisplay = () => alertElm.style.display = "none";
+
+  const valueDetectedElm = document.getElementById("ValueDetected") as TextElement;
+  valueDetectedElm.text = glucose[glucose.unit];
+
+  const typeDetectedElm = document.getElementById("TypeDetected") as TextElement;
+  typeDetectedElm.text = glucose.alert.type!.charAt(0).toUpperCase() + glucose.alert.type!.slice(1) + " Detected";
+
+  hideMainDisplay();
+  showAlertDisplay();
+
+  const muteButtonElm = document.getElementById("MuteButton");
+  // @ts-ignore
+  muteButtonElm.onclick = () => {
+    hideAlertDisplay();
+    showMainDisplay();
+  }
+}
+
 function triggerRefresh() {
   me.exit();
 }
@@ -103,6 +136,7 @@ function processMessage(event: Message) {
     case "glucose":
       console.log("Processing glucose message")
       drawGlucose(event.message);
+      drawAlert(event.message);
       break;
     case "weather":
       console.log("Processing weather message")

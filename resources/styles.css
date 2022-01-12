@@ -103,3 +103,31 @@
   height: 110;
   y: 47%
 }
+
+#TypeDetected {
+  fill: #FFE6D2;
+  text-length: 64;
+  font-size: 40;
+  font-family: System-Regular;
+  x: 50%;
+  y: 100%-250;
+  text-anchor: middle;
+}
+
+#ValueDetected {
+  fill: #FFE6D2;
+  text-length: 64;
+  font-size: 80;
+  font-family: System-Regular;
+  x: 50%;
+  y: 100%-150;
+  text-anchor: middle;
+}
+
+.application-fill           { fill: fb-yellow; }
+.foreground-fill            { fill: fb-white; }
+.background-fill            { fill: fb-black; }
+
+#MuteButton #text {
+  text-buffer: "Mute";
+}

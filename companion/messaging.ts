@@ -3,7 +3,10 @@ import {
   getDexcomEstimatedGlucoseValues,
   getDexcomUnit,
   getWeatherValues,
+  getHighAlertThreshold,
+  getLowAlertThreshold,
 } from "./local-storage";
+import {Alert} from "./alert";
 
 export function sendData() {
   sendWeather();
@@ -18,10 +21,39 @@ function sendGlucose() {
   const glucoseValues = getDexcomEstimatedGlucoseValues();
   if (Object.keys(glucoseValues).length === 0) return;
 
+  const unit = getDexcomUnit();
+
+  // TODO: Extract alerting
+  const lowAlertThreshold = parseFloat(getLowAlertThreshold());
+  const highAlertThreshold = parseFloat(getHighAlertThreshold());
+
+  const alertEnabled =
+    !Object.is(NaN, lowAlertThreshold)
+    && !Object.is(NaN, highAlertThreshold);
+
+  let alertActive = false;
+  let alertType = null;
+
+  if (alertEnabled) {
+    const alert = new Alert({
+      lowAlertThreshold,
+      highAlertThreshold,
+      currentBg: glucoseValues[unit],
+    });
+
+    alertActive = alert.active;
+    alertType = alert.type;
+  }
+
   asap.send({
     type: "glucose",
     message: {
-      unit: getDexcomUnit(),
+      unit,
+      alert: {
+        enabled: alertEnabled,
+        active: alertActive,
+        type: alertType,
+      },
       ...glucoseValues,
     }
   });

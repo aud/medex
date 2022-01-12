@@ -74,8 +74,8 @@ settingsStorage.onchange = (event: StorageChangeEvent) => {
   // Refresh weather store every 5m
   setInterval(async () => await writeWeather(), 5 * 60 * 1000);
   // Refresh glucose store every 30s
-  setInterval(async () => await writeGlucose(client), 30 * 1000);
+  setInterval(async () => await writeGlucose(client), 0.5 * 60 * 1000);
 
   // Repaint UI with latest data every 30s
-  setInterval(sendData, 30 * 1000);
+  setInterval(sendData, 0.5 * 60 * 1000);
 })();

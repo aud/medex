@@ -1,40 +1,49 @@
 <svg viewport-fill="black">
-  <svg id="GlucoseSection">
-    <svg id="GlucoseLine">
-      <line x1="0%" y1="75" x2="100%" y2="75" fill="#FFE6D2" stroke-width="5" />
+  <svg id="Alert" display="none">
+    <text id="TypeDetected"></text>
+    <text id="ValueDetected"></text>
+
+    <use id="MuteButton" href="#text-button" class="text-button bottom application-fill" />
+  </svg>
+
+  <svg id="Main">
+    <svg id="GlucoseSection">
+      <svg id="GlucoseLine">
+        <line x1="0%" y1="75" x2="100%" y2="75" fill="#FFE6D2" stroke-width="5" />
+      </svg>
+
+      <text id="GlucoseNotLoaded">-</text>
+
+      <use href="#fitfont" id="Glucose" x="50%" y="50%-100" fill="#FFE6D2">
+        <use href="#fitfont-char"/>
+        <use href="#fitfont-char"/>
+        <use href="#fitfont-char"/>
+        <use href="#fitfont-char"/>
+        <use href="#fitfont-char"/>
+      </use>
+
+      <text id="GlucoseLastUpdated"></text>
+      <image id="GlucoseArrowIcon" href="" />
     </svg>
 
-    <text id="GlucoseNotLoaded">-</text>
+    <svg id="MainSection">
+      <image id="Band" href="images/band.png" />
 
-    <use href="#fitfont" id="Glucose" x="50%" y="50%-100" fill="#FFE6D2">
-      <use href="#fitfont-char"/>
-      <use href="#fitfont-char"/>
-      <use href="#fitfont-char"/>
-      <use href="#fitfont-char"/>
-      <use href="#fitfont-char"/>
-    </use>
+      <image id="DateIcon" href="images/date.png" />
+      <text id="Date">-</text>
 
-    <text id="GlucoseLastUpdated"></text>
-    <image id="GlucoseArrowIcon" href="" />
-  </svg>
+      <image id="WeatherIcon" href="images/weather.png" />
+      <text id="Weather">-</text>
 
-  <svg id="MainSection">
-    <image id="Band" href="images/band.png" />
+      <image id="StepsIcon" href="images/shoe.png" />
+      <text id="Steps">-</text>
 
-    <image id="DateIcon" href="images/date.png" />
-    <text id="Date">-</text>
+      <image id="HeartRateIcon" href="images/heart.png" />
+      <text id="HeartRate">-</text>
+    </svg>
 
-    <image id="WeatherIcon" href="images/weather.png" />
-    <text id="Weather">-</text>
-
-    <image id="StepsIcon" href="images/shoe.png" />
-    <text id="Steps">-</text>
-
-    <image id="HeartRateIcon" href="images/heart.png" />
-    <text id="HeartRate">-</text>
-  </svg>
-
-  <svg id="BottomSection">
-    <text id="Clock">-</text>
+    <svg id="BottomSection">
+      <text id="Clock">-</text>
+    </svg>
   </svg>
 </svg>
