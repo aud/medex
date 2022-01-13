@@ -12,8 +12,10 @@ import {steps} from "./steps";
 import {clock} from "./clock";
 import type {Glucose, Weather, Message} from "../types/message";
 import {FitFont} from "fitfont";
+import {vibration} from "haptics";
 
 let tickerInterval: ReturnType<typeof setInterval>;
+let vibrationInterval: ReturnType<typeof setInterval>;
 
 function drawGlucose(glucose: Glucose) {
   // For mmol, round to tenth decimal.
@@ -97,7 +99,11 @@ function drawClock() {
 function drawAlert(glucose: Glucose) {
   if (glucose.alert.enabled === false) return;
   if (glucose.alert.active === false) return;
-  if (glucose.alert.prevDismissed === true) return;
+
+  if (glucose.alert.prevDismissed === true) {
+    clearInterval(vibrationInterval);
+    return;
+  };
 
   // Draw interface first
   //
@@ -120,9 +126,16 @@ function drawAlert(glucose: Glucose) {
   hideMainDisplay();
   showAlertDisplay();
 
+  // Start vibration
+  vibrationInterval = setInterval(() => {
+    vibration.start("nudge-max");
+  }, 2_000);
+
   const muteButtonElm = document.getElementById("MuteButton");
   // @ts-ignore
   muteButtonElm.onclick = () => {
+    clearInterval(vibrationInterval);
+
     hideAlertDisplay();
     showMainDisplay();
 
