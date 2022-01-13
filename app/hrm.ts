@@ -1,8 +1,14 @@
+import document from "document";
 import {HeartRateSensor} from "heart-rate";
 import {display} from "display";
 
+export function drawHeartRate() {
+  const hrElm = document.getElementById("HeartRate") as TextElement;
+  hrm((hr: string) => hrElm.text = hr);
+}
+
 // https://dev.fitbit.com/build/guides/sensors/heart-rate/
-export function hrm(callback: Function) {
+function hrm(callback: Function) {
   // @ts-ignore
   const hrm = new HeartRateSensor({frequency: 1});
 

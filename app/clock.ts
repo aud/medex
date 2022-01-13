@@ -1,9 +1,14 @@
+import document from "document";
 import fitbitClock from "clock";
 import {preferences} from "user-settings";
+import {withZeroPad} from "../common/utils";
 
-const withZeroPad = (val: string) => ("0" + val).slice(-2);
+export function drawClock() {
+  const clockElm = document.getElementById("Clock") as TextElement;
+  clock((time: string) => clockElm.text = time);
+}
 
-export const clock = (callback: Function) => {
+function clock(callback: Function) {
   fitbitClock.granularity = "seconds";
 
   // @ts-ignore

@@ -6,6 +6,7 @@ import {
   getDexcomUsername,
   getDexcomPassword,
   getDexcomServer,
+  setAlertDismissed,
 } from "./local-storage";
 import {writeAlertDismissed} from "./alert";
 import {writeGlucose} from "./glucose";
@@ -55,6 +56,11 @@ settingsStorage.onchange = (event: StorageChangeEvent) => {
     case STORAGE_KEYS.DEXCOM_PASSWORD:
     case STORAGE_KEYS.DEXCOM_SERVER:
       client = refreshClient();
+      break;
+    case STORAGE_KEYS.DEXCOM_LOW_THRESHOLD:
+    case STORAGE_KEYS.DEXCOM_HIGH_THRESHOLD:
+      console.error("Resetting alert dismissed")
+      setAlertDismissed("0");
       break;
   }
 

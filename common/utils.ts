@@ -49,3 +49,7 @@ export function classifiedStale(timestamp: Glucose["timestamp"]) {
 
   return now >= (timestamp + staleThreshold * 1000);
 }
+
+export function withZeroPad(val: string) {
+  return ("0" + val).slice(-2);
+}
