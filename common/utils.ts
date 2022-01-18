@@ -53,3 +53,10 @@ export function classifiedStale(timestamp: Glucose["timestamp"]) {
 export function withZeroPad(val: string) {
   return ("0" + val).slice(-2);
 }
+
+export function sign(n: number) {
+  if (n > 0) return 1;
+  if (n < 0) return -1;
+
+  return 0;
+}
