@@ -6,14 +6,14 @@ import type {Glucose} from "../types/message";
 let vibrationInterval: ReturnType<typeof setInterval>;
 
 export function drawAlert(glucose: Glucose) {
-  console.error(JSON.stringify(glucose));
-
-  if (glucose.alert.prevDismissed === true) {
+  if (
+    glucose.alert.prevDismissed === true ||
+    glucose.alert.enabled === false ||
+    glucose.alert.active === false
+  ) {
     clearInterval(vibrationInterval);
     return;
   };
-  if (glucose.alert.enabled === false) return;
-  if (glucose.alert.active === false) return;
 
   // Draw interface first
   //
