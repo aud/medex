@@ -27,7 +27,7 @@
 #Weather {
   x: 60;
   y: 250;
-  font-size: 40;
+  font-size: 30;
   font-family: System-Regular;
   fill: #79523B;
   text-length: 64;
@@ -43,7 +43,7 @@
 #Date {
   x: 60;
   y: 200;
-  font-size: 40;
+  font-size: 30;
   font-family: System-Regular;
   fill: #79523B;
   text-length: 64;
@@ -59,7 +59,7 @@
 #Steps {
   x: 230;
   y: 200;
-  font-size: 40;
+  font-size: 30;
   font-family: System-Regular;
   fill: #79523B;
   text-length: 64;
@@ -75,7 +75,7 @@
 #HeartRate {
   x: 230;
   y: 250;
-  font-size: 40;
+  font-size: 30;
   font-family: System-Regular;
   fill: #79523B;
   text-length: 64;
