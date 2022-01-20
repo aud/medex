@@ -11,11 +11,14 @@ import {
 import {Alert} from "./alert";
 
 export function sendData() {
+  asap.cancel();
+
   sendWeather();
   sendGlucose();
 }
 
 export function sendRefresh() {
+  asap.cancel();
   asap.send({type: "refresh"});
 }
 

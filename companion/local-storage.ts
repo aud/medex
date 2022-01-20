@@ -47,7 +47,9 @@ export function setDexcomEstimatedGlucoseValues(data: string) {
 }
 
 export function getWeatherUnit() {
-  return deserializedContents(STORAGE_KEYS.WEATHER_UNIT).values[0].name;
+  const data = deserializedContents(STORAGE_KEYS.WEATHER_UNIT).values;
+
+  return data && data[0].name;
 }
 
 export function getWeatherValues() {
