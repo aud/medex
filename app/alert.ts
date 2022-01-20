@@ -5,15 +5,25 @@ import type {Glucose} from "../types/message";
 
 let vibrationInterval: ReturnType<typeof setInterval>;
 
+function stopVibration() {
+  clearInterval(vibrationInterval);
+  // Ensure for sanity..
+  vibration.stop();
+}
+
 export function drawAlert(glucose: Glucose) {
   if (
     glucose.alert.prevDismissed === true ||
     glucose.alert.enabled === false ||
     glucose.alert.active === false
   ) {
-    clearInterval(vibrationInterval);
+    stopVibration();
     return;
   };
+
+  if (vibrationInterval) {
+    stopVibration();
+  }
 
   // Draw interface first
   //
@@ -36,7 +46,6 @@ export function drawAlert(glucose: Glucose) {
   hideMainDisplay();
   showAlertDisplay();
 
-  // Start vibration
   vibrationInterval = setInterval(() => {
     vibration.start("nudge-max");
   }, 2_000);
@@ -44,7 +53,7 @@ export function drawAlert(glucose: Glucose) {
   const muteButtonElm = document.getElementById("MuteButton");
   // @ts-ignore
   muteButtonElm.onclick = () => {
-    clearInterval(vibrationInterval);
+    stopVibration();
 
     hideAlertDisplay();
     showMainDisplay();
