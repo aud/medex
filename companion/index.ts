@@ -1,4 +1,4 @@
-import asap from "fitbit-asap/companion";
+import {peerSocket} from "messaging";
 import {DexcomClient} from "dexcom-share-api";
 import {settingsStorage} from "settings";
 import {STORAGE_KEYS} from "../common/config";
@@ -80,9 +80,6 @@ function processMessage(event: Message) {
 }
 
 (async () => {
-  // Cancel if previous messages
-  asap.cancel();
-
   // Warm store on initialization
   await writeWeather();
   await writeGlucose(client);
@@ -98,5 +95,11 @@ function processMessage(event: Message) {
   // Repaint UI with latest data every 30s
   setInterval(sendData, 0.5 * 60 * 1000);
 
-  asap.onmessage = processMessage;
+  // asap.onmessage = processMessage;
+
+  // @ts-ignore
+  peerSocket.addEventListener("open", (evt) => {
+    console.error("Peer socket open!!")
+    sendData();
+  });
 })();

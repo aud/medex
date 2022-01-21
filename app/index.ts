@@ -1,3 +1,4 @@
+import {peerSocket} from "messaging";
 import {me} from "appbit";
 import asap from "fitbit-asap/app";
 import {drawGlucose} from "./glucose";
@@ -8,6 +9,8 @@ import {drawClock} from "./clock";
 import {drawHeartRate} from "./hrm";
 import {drawAlert} from "./alert";
 import type {Message} from "../types/message";
+
+me.appTimeoutEnabled = false
 
 function triggerRefresh() {
   me.exit();
@@ -38,6 +41,25 @@ function processMessage(event: Message) {
   drawSteps();
   drawHeartRate();
   drawClock();
-
-  asap.onmessage = processMessage;
 })();
+
+setInterval(() => {
+  console.error("readystate: " + peerSocket.readyState)
+}, 5_000);
+
+// @ts-ignore
+peerSocket.addEventListener("message", event => {
+  console.error("HIT")
+})
+
+peerSocket.onopen = function() {
+  console.error("Messaging open")
+}
+
+peerSocket.onclose = function(evt) {
+  console.error(`Messaging closed: ${evt.code}`)
+}
+
+peerSocket.onerror = function(evt) {
+  console.error(`Messaging error: ${evt.code}: ${evt.message}`)
+}

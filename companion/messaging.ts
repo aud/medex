@@ -1,4 +1,4 @@
-import asap from "fitbit-asap/companion";
+import {peerSocket} from "messaging";
 import {
   getDexcomEstimatedGlucoseValues,
   getDexcomUnit,
@@ -11,15 +11,18 @@ import {
 import {Alert} from "./alert";
 
 export function sendData() {
-  asap.cancel();
-
   sendWeather();
   sendGlucose();
 }
 
 export function sendRefresh() {
-  asap.cancel();
-  asap.send({type: "refresh"});
+  console.log("Sending refresh")
+
+  if (peerSocket.readyState === peerSocket.OPEN) {
+    peerSocket.send({type: "refresh"});
+  } else {
+    console.error("Refresh: Peer socket closed!")
+  }
 }
 
 function sendGlucose() {
@@ -56,24 +59,34 @@ function sendGlucose() {
     setAlertDismissed("0");
   }
 
-  asap.send({
-    type: "glucose",
-    message: {
-      unit,
-      alert: {
-        enabled: alertEnabled,
-        active: alertActive,
-        type: alertType,
-        prevDismissed: alertDismissed,
-      },
-      ...glucoseValues,
-    }
-  });
+  if (peerSocket.readyState === peerSocket.OPEN) {
+    console.error("Glucose: Sending!")
+    peerSocket.send({
+      type: "glucose",
+      message: {
+        unit,
+        alert: {
+          enabled: alertEnabled,
+          active: alertActive,
+          type: alertType,
+          prevDismissed: alertDismissed,
+        },
+        ...glucoseValues,
+      }
+    });
+  } else {
+    console.error("Glucose: Peer socket not open!")
+  }
 }
 
 function sendWeather() {
   const weather = getWeatherValues();
   if (Object.keys(weather).length === 0) return;
 
-  asap.send({type: "weather", message: weather});
+  if (peerSocket.readyState === peerSocket.OPEN) {
+    console.error("Weather: Sending!")
+    peerSocket.send({type: "weather", message: weather});
+  } else {
+    console.error("Weather: Peer socket not open!")
+  }
 }
