@@ -9,12 +9,21 @@ import {
   setAlertDismissed,
 } from "./local-storage";
 import {Alert} from "./alert";
+import {outbox} from "file-transfer"
+import {encode} from "cbor";
 
-export function sendData() {
-  asap.cancel();
+export async function sendData() {
+  const data = [
+    glucoseValues(),
+    weatherValues(),
+  ]
 
-  sendWeather();
-  sendGlucose();
+  try {
+    console.error("Enqueueing file")
+    await outbox.enqueue("new-data", encode(data))
+  } catch(err) {
+    console.error("failed to enqueue file: " + err);
+  }
 }
 
 export function sendRefresh() {
@@ -22,9 +31,9 @@ export function sendRefresh() {
   asap.send({type: "refresh"});
 }
 
-function sendGlucose() {
-  const glucoseValues = getDexcomEstimatedGlucoseValues();
-  if (Object.keys(glucoseValues).length === 0) return;
+function glucoseValues() {
+  const values = getDexcomEstimatedGlucoseValues();
+  if (Object.keys(values).length === 0) return;
 
   const unit = getDexcomUnit();
 
@@ -43,7 +52,7 @@ function sendGlucose() {
     const alert = new Alert({
       lowAlertThreshold,
       highAlertThreshold,
-      currentBg: glucoseValues[unit],
+      currentBg: values[unit],
     });
 
     alertActive = alert.active;
@@ -56,7 +65,7 @@ function sendGlucose() {
     setAlertDismissed("0");
   }
 
-  asap.send({
+  return {
     type: "glucose",
     message: {
       unit,
@@ -66,14 +75,14 @@ function sendGlucose() {
         type: alertType,
         prevDismissed: alertDismissed,
       },
-      ...glucoseValues,
+      ...values,
     }
-  });
+  };
 }
 
-function sendWeather() {
+function weatherValues() {
   const weather = getWeatherValues();
   if (Object.keys(weather).length === 0) return;
 
-  asap.send({type: "weather", message: weather});
+  return {type: "weather", message: weather};
 }

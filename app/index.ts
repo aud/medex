@@ -1,5 +1,4 @@
 import {me} from "appbit";
-import asap from "fitbit-asap/app";
 import {drawGlucose} from "./glucose";
 import {drawDate} from "./date";
 import {drawSteps} from "./steps";
@@ -8,6 +7,10 @@ import {drawClock} from "./clock";
 import {drawHeartRate} from "./hrm";
 import {drawAlert} from "./alert";
 import type {Message} from "../types/message";
+import {inbox} from "file-transfer"
+import {readFileSync, unlinkSync, listDirSync} from "fs";
+
+me.appTimeoutEnabled = false;
 
 function triggerRefresh() {
   me.exit();
@@ -33,11 +36,26 @@ function processMessage(event: Message) {
   }
 }
 
+function processAllFiles() {
+  let fileName: string | undefined;
+  while (fileName = inbox.nextFile()) {
+    console.log(`/private/data/${fileName} is now available`);
+
+    // @ts-ignore
+    const messages = readFileSync(fileName, "cbor") as Message[];
+    messages.forEach(msg => processMessage(msg))
+
+    unlinkSync(fileName)
+  }
+}
+
 (() => {
   drawDate();
   drawSteps();
   drawHeartRate();
   drawClock();
 
-  asap.onmessage = processMessage;
+  // @ts-ignore
+  inbox.addEventListener("newfile", processAllFiles);
+  processAllFiles();
 })();

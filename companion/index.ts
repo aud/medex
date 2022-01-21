@@ -50,7 +50,7 @@ function refreshClient() {
 
 let client = refreshClient();
 
-settingsStorage.onchange = (event: StorageChangeEvent) => {
+settingsStorage.onchange = async (event: StorageChangeEvent) => {
   switch (event.key) {
     case STORAGE_KEYS.DEXCOM_USERNAME:
     case STORAGE_KEYS.DEXCOM_PASSWORD:
@@ -65,7 +65,7 @@ settingsStorage.onchange = (event: StorageChangeEvent) => {
   }
 
   sendRefresh();
-  sendData();
+  await sendData();
 }
 
 function processMessage(event: Message) {
@@ -80,23 +80,21 @@ function processMessage(event: Message) {
 }
 
 (async () => {
-  // Cancel if previous messages
-  asap.cancel();
-
   // Warm store on initialization
   await writeWeather();
   await writeGlucose(client);
 
   // Paint UI on initilization
-  sendData();
+  await sendData();
 
   // Refresh weather store every 5m
   setInterval(async () => await writeWeather(), 5 * 60 * 1000);
+
   // Refresh glucose store every 30s
   setInterval(async () => await writeGlucose(client), 0.5 * 60 * 1000);
 
   // Repaint UI with latest data every 30s
-  setInterval(sendData, 0.5 * 60 * 1000);
+  setInterval(async () => await sendData(), 0.5 * 60 * 1000);
 
   asap.onmessage = processMessage;
 })();
